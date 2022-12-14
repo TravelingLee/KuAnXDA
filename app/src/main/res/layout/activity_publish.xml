@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/publish_parent"
+    tools:context=".PublishActivity">
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/go_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_baseline_chevron_left_24" />
+        <TextView
+            android:id="@+id/text_publish"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:text="发布"
+            android:textSize="16dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_marginStart="16dp"
+        android:id="@+id/add_image"
+        android:src="@drawable/ic_baseline_add_box_24"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_bar"
+        android:layout_marginTop="16dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:layout_marginStart="16dp"
+        android:id="@+id/et_title"
+        android:hint="标题"
+        android:maxLength="15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/add_image"
+        tools:ignore="MissingConstraints" />
+    <EditText
+        android:layout_marginStart="16dp"
+        android:id="@+id/et_edit_text"
+        android:hint="编辑文本"
+        android:lines="3"
+        android:maxLength="30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_title"
+        android:layout_marginTop="4dp"
+        tools:ignore="MissingConstraints" />
+
+    <com.lwkandroid.widget.ngv.NineGridView
+        android:id="@+id/nine_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_edit_text"
+        android:layout_marginTop="16dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="话题"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@id/add_title_divider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="666"
+        android:background="@drawable/title_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/add_title_divider"
+        app:layout_constraintRight_toLeftOf="@id/add_title"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:layout_marginEnd="16dp"
+        android:id="@+id/add_title"
+        app:layout_constraintBottom_toTopOf="@id/add_title_divider"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_baseline_add_box_24"
+        tools:ignore="MissingConstraints" />
+    <View
+        android:layout_marginBottom="16dp"
+        android:id="@+id/add_title_divider"
+        app:layout_constraintBottom_toTopOf="@id/draft"
+        android:background="#000000"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/add_title"
+        android:id="@+id/linear_label"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <TextView
+            android:id="@+id/label_text"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标签"
+            android:textSize="20dp"
+            tools:ignore="MissingConstraints" />
+        <EditText
+            android:maxLength="5"
+            android:background="@null"
+            android:id="@+id/et_add_label"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_width="match_parent" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_add_label"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/label_divider"
+        app:layout_constraintRight_toLeftOf="@id/iv_add_label"
+        tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/iv_add_label"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintBottom_toTopOf="@id/label_divider"
+        app:layout_constraintRight_toRightOf="@id/label_divider"
+        android:src="@drawable/ic_baseline_add_box_24"
+        tools:ignore="MissingConstraints" />
+    <View
+        app:layout_constraintTop_toBottomOf="@id/linear_label"
+        android:id="@+id/label_divider"
+        android:background="#000000"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/draft"
+        android:gravity="center"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_drafts_24"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="草稿"
+            app:layout_constraintTop_toBottomOf="@id/draft"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/cancel"
+        android:gravity="center"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_cancel_24"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            app:layout_constraintTop_toBottomOf="@id/draft"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

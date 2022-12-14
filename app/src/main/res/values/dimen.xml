@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="divider" type="dimen">5dp</item>
+    <item name="grid_expected_size" type="dimen">120dp</item>
+</resources>

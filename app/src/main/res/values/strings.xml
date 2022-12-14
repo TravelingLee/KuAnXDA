@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">KuAnXDA</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="EditInfo">编辑资料</string>
+    <string name="go_to_login">去登录</string>
+    <string name="follow">关注</string>
+    <string name="fans">粉丝</string>
+    <string name="fabulous">赞</string>
+    <string name="btn_follow">+关注</string>
+    <string name="comment_tip">输入评论内容</string>
+</resources>
