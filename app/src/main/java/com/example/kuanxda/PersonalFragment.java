@@ -198,12 +198,13 @@ public class PersonalFragment extends Fragment {
                     }
                     intent.putExtra(KEY_INTRODUCTION, introduction.getText());
                     intent.putExtra(KEY_ID, id.getText());
-                    startActivity(intent);
+                    startActivityForResult(intent,4);
                 }
             });
             nickname.setText(spf.getString("name", "未登录"));
             id.setText(spf.getString("id", ""));
             introduction.setText(spf.getString("introduction", ""));
+            System.err.println("个人介绍1："+spf.getString("introduction", ""));
             if (spf.getInt("sex", 2) == 0) {
                 sex.setImageResource(R.drawable.male);
             } else if (spf.getInt("sex", 2) == 1) {

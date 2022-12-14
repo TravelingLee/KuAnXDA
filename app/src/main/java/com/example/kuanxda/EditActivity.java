@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,7 +165,7 @@ public class EditActivity extends AppCompatActivity {
 
                         Map<String, Object> param = new HashMap<>();
                         param.put("username",editText_nickname.getText().toString().trim());
-                        param.put("id", intent_id);
+//                        param.put("id", intent_id);
 
                         String body = gson.toJson(param);
                         MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
@@ -180,7 +181,9 @@ public class EditActivity extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                                         Log.e("MODIFY_ERR", e.toString());
+                                        Looper.prepare();
                                         Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
                                     }
 
                                     @Override
@@ -190,9 +193,11 @@ public class EditActivity extends AppCompatActivity {
                                         String body = response.body().string();
                                         ResponseBody<Object> modifyResponse = gson.fromJson(body, jsonType);
                                         if (modifyResponse.getCode() != 200) {
-                                            Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
-                                        }
-                                        editor.putString("name",editText_nickname.getText().toString().trim());
+                                            Looper.prepare();
+                                            Toast.makeText(mContext, "响应失败", Toast.LENGTH_SHORT).show();
+                                            Looper.loop();
+                                        }else
+                                            editor.putString("name",editText_nickname.getText().toString().trim());
                                     }
                                 });
 
@@ -233,7 +238,7 @@ public class EditActivity extends AppCompatActivity {
                         }else {
                             param.put("sex",2);
                         }
-                        param.put("id", intent_id);
+//                        param.put("id", intent_id);
 
                         String body = gson.toJson(param);
                         MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
@@ -249,7 +254,9 @@ public class EditActivity extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                                         Log.e("MODIFY_ERR", e.toString());
+                                        Looper.prepare();
                                         Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
                                     }
 
                                     @Override
@@ -259,14 +266,17 @@ public class EditActivity extends AppCompatActivity {
                                         String body = response.body().string();
                                         ResponseBody<Object> modifyResponse = gson.fromJson(body, jsonType);
                                         if (modifyResponse.getCode() != 200) {
-                                            Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (sex.getText().toString().trim().equals("男")) {
-                                            editor.putInt("sex",0);
-                                        } else if (sex.getText().toString().trim().equals("女")) {
-                                            editor.putInt("sex",1);
+                                            Looper.prepare();
+                                            Toast.makeText(mContext, "响应失败", Toast.LENGTH_SHORT).show();
+                                            Looper.loop();
                                         }else {
-                                            editor.putInt("sex",2);
+                                            if (sex.getText().toString().trim().equals("男")) {
+                                                editor.putInt("sex",0);
+                                            } else if (sex.getText().toString().trim().equals("女")) {
+                                                editor.putInt("sex",1);
+                                            }else {
+                                                editor.putInt("sex",2);
+                                            }
                                         }
                                     }
                                 });
@@ -308,7 +318,6 @@ public class EditActivity extends AppCompatActivity {
                         param.put("id", intent_id);
 
                         String body = gson.toJson(param);
-                        System.out.println("测试");
 
                         MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -317,12 +326,16 @@ public class EditActivity extends AppCompatActivity {
                                 .url(url)
                                 .post(RequestBody.create(MEDIA_TYPE_JSON, body))
                                 .build();
+                        System.out.println("测试");
+
                         httpClient.newCall(request)
                                 .enqueue(new Callback() {
                                     @Override
                                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                                         Log.e("MODIFY_ERR", e.toString());
+                                        Looper.prepare();
                                         Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
                                     }
 
                                     @Override
@@ -330,9 +343,16 @@ public class EditActivity extends AppCompatActivity {
                                         Type jsonType = new TypeToken<ResponseBody<Object>>() {
                                         }.getType();
                                         String body = response.body().string();
+                                        System.out.println(body);
                                         ResponseBody<Object> modifyResponse = gson.fromJson(body, jsonType);
                                         if (modifyResponse.getCode() != 200) {
-                                            Toast.makeText(mContext, "修改失败", Toast.LENGTH_SHORT).show();
+                                            Looper.prepare();
+                                            System.out.println(modifyResponse.getCode());
+                                            Toast.makeText(mContext, "响应失败", Toast.LENGTH_SHORT).show();
+                                            Looper.loop();
+                                        }else {
+                                            editor.putString("introduction",introduction.getText().toString().trim());
+                                            System.out.println("个人介绍2："+spf.getString("introduction", ""));
                                         }
                                     }
                                 });

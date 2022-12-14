@@ -1,6 +1,5 @@
 package com.example.kuanxda;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -11,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -162,7 +164,14 @@ public class FoundFragment extends Fragment {
                                         SharedResponse<Object> sharedResponse = gson.fromJson(body, jsonType);
                                         List<SharedResponse.Data.Record> record = sharedResponse.getData().getRecords();
                                         recordList.addAll(record);
-                                        photoAdapter.notifyDataSetChanged();
+                                        System.out.println("能addAll");
+                                        Looper.prepare();
+                                        Handler handler = new Handler();
+                                        Message message = new Message();
+                                        message.obj = photoAdapter;
+                                        message.what = 1;
+                                        handler.sendMessage(message);
+                                        Looper.loop();
 //                                        FoundFragment.this.notify();
 
 //                                        PhotoFragment photoFragment = new PhotoFragment(record);

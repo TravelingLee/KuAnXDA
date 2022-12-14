@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +63,17 @@ public class MainActivity extends AppCompatActivity {
 
     OkHttpClient httpClient = new OkHttpClient();
     Gson gson = new Gson();
+
+    @SuppressLint("HandlerLeak")
+    private static Handler handler = new Handler(){
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            if (msg.what==1){
+                PhotoAdapter photoAdapter = (PhotoAdapter) msg.obj;
+                photoAdapter.notifyDataSetChanged();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
