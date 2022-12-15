@@ -1,7 +1,7 @@
 package com.example.kuanxda;
 
 import java.util.List;
-//评论的实体类，未使用，使用了CommentRecord类
+//评论的实体类
 public class Comment {
     String userName;
     String comment_content;

@@ -240,6 +240,7 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        System.out.println("onStart调用");
         getSharedList(dynamic_url, 10, 0, "INIT");
     }
 
@@ -248,19 +249,26 @@ public class PersonalFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         have_login = true;
-        if (data != null) {
+        if (data != null&&requestCode==3) {
             NAME = data.getStringExtra(LoginActivity.USER_NAME);
             ID = data.getStringExtra(LoginActivity.USER_ID);
             INTRODUCTION = data.getStringExtra(LoginActivity.INTRODUCTION);
             SEX = data.getIntExtra(LoginActivity.SEX, 2);
             AVATAR = data.getStringExtra(LoginActivity.AVATAR);
+            System.err.println("Introduction Info On Result:"+INTRODUCTION);
+        }else if (requestCode==4){
+            NAME = spf.getString("name","");
+            ID = spf.getString("id","");
+            INTRODUCTION = spf.getString("introduction","");
+            SEX = spf.getInt("sex",2);
+            AVATAR = spf.getString("avatar",null);
         }
 
         spf = getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
         editor = spf.edit();
 
         editor.putString("name", NAME);
-        editor.putString("id", ID);
+        if (ID!=null)editor.putString("id", ID);
         editor.putString("introduction", INTRODUCTION);
         editor.putInt("sex", SEX);
         editor.putString("avatar", AVATAR);
@@ -295,7 +303,7 @@ public class PersonalFragment extends Fragment {
         }
         if (AVATAR != null) {
             Glide.with(mContext)
-                    .load(data.getStringExtra(LoginActivity.AVATAR))
+                    .load(AVATAR)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .transform(new GlideCircleTransform(mContext))
                     .crossFade()

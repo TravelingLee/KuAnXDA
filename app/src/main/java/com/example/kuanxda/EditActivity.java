@@ -40,6 +40,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 //编辑个人信息的activity
 public class EditActivity extends AppCompatActivity {
     int edit_avatar_path;
@@ -85,7 +86,7 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        spf = getSharedPreferences("user_info",Context.MODE_PRIVATE);
+        spf = getSharedPreferences("user_info", Context.MODE_PRIVATE);
         editor = spf.edit();
 
         OkHttpClient httpClient = new OkHttpClient();
@@ -113,7 +114,6 @@ public class EditActivity extends AppCompatActivity {
         String intent_id = intent.getStringExtra(PersonalFragment.KEY_ID);
 
         if (intent_nickname != null) nickname.setText(intent_nickname);
-        Log.d("INTENT_AVATAR", intent_avatar);
         if (intent_avatar != null)
             Glide.with(mContext)
                     .load(intent_avatar)
@@ -155,7 +155,7 @@ public class EditActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         nickname.setText(editText_nickname.getText());
-                        System.out.println("ET_NICKNAME"+editText_nickname.getText());
+                        System.out.println("ET_NICKNAME" + editText_nickname.getText());
 
                         Headers headers = new Headers.Builder()
                                 .add("appId", "2c442f1f2e004dd78f2f586abd8ed6d2")
@@ -164,7 +164,7 @@ public class EditActivity extends AppCompatActivity {
                                 .build();
 
                         Map<String, Object> param = new HashMap<>();
-                        param.put("username",editText_nickname.getText().toString().trim());
+                        param.put("username", editText_nickname.getText().toString().trim());
 //                        param.put("id", intent_id);
 
                         String body = gson.toJson(param);
@@ -196,8 +196,10 @@ public class EditActivity extends AppCompatActivity {
                                             Looper.prepare();
                                             Toast.makeText(mContext, "响应失败", Toast.LENGTH_SHORT).show();
                                             Looper.loop();
-                                        }else
-                                            editor.putString("name",editText_nickname.getText().toString().trim());
+                                        } else {
+                                            editor.putString("name", editText_nickname.getText().toString().trim());
+                                            editor.apply();
+                                        }
                                     }
                                 });
 
@@ -231,14 +233,14 @@ public class EditActivity extends AppCompatActivity {
                                 .build();
 
                         Map<String, Object> param = new HashMap<>();
-                        if (position==0){
+                        if (position == 0) {
                             param.put("sex", 0);
-                        }else if (position==1){
-                            param.put("sex",1);
-                        }else {
-                            param.put("sex",2);
+                        } else if (position == 1) {
+                            param.put("sex", 1);
+                        } else {
+                            param.put("sex", 2);
                         }
-//                        param.put("id", intent_id);
+                        param.put("id", intent_id);
 
                         String body = gson.toJson(param);
                         MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
@@ -269,14 +271,15 @@ public class EditActivity extends AppCompatActivity {
                                             Looper.prepare();
                                             Toast.makeText(mContext, "响应失败", Toast.LENGTH_SHORT).show();
                                             Looper.loop();
-                                        }else {
+                                        } else {
                                             if (sex.getText().toString().trim().equals("男")) {
-                                                editor.putInt("sex",0);
+                                                editor.putInt("sex", 0);
                                             } else if (sex.getText().toString().trim().equals("女")) {
-                                                editor.putInt("sex",1);
-                                            }else {
-                                                editor.putInt("sex",2);
+                                                editor.putInt("sex", 1);
+                                            } else {
+                                                editor.putInt("sex", 2);
                                             }
+                                            editor.apply();
                                         }
                                     }
                                 });
@@ -350,9 +353,11 @@ public class EditActivity extends AppCompatActivity {
                                             System.out.println(modifyResponse.getCode());
                                             Toast.makeText(mContext, "响应失败", Toast.LENGTH_SHORT).show();
                                             Looper.loop();
-                                        }else {
-                                            editor.putString("introduction",introduction.getText().toString().trim());
-                                            System.out.println("个人介绍2："+spf.getString("introduction", ""));
+                                        } else {
+                                            editor.putString("introduction", introduction.getText().toString().trim());
+                                            editor.apply();
+                                            System.out.println("put进去的个人介绍：" + introduction.getText().toString().trim());
+                                            System.out.println("个人介绍2：" + spf.getString("introduction", ""));
                                         }
                                     }
                                 });
