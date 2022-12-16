@@ -613,17 +613,17 @@ public class DetailActivity extends AppCompatActivity {
         likeId = intent.getStringExtra("likeId");
         pUserId = intent.getStringExtra("pUserId");
         commentList_string = intent.getStringExtra("first_comment_list");
-//        commentList = intent.getStringArrayListExtra("first_comment_list");
-//        System.out.println("评论列表："+commentList);
-//
-//
-//        Type jsonType = new TypeToken<List<Object>>(){}.getType();
-//        List<CommentRecord.Comment> commentRecords = gson.fromJson(commentList_string,jsonType);
-//
-//
-//        CommentAdapter commentAdapter = new CommentAdapter(mContext,commentRecords);
-//
-//        comment_list.setAdapter(commentAdapter);
+        System.out.println("评论列表："+commentList_string);
+
+
+        Type jsonType = new TypeToken<List<Object>>(){}.getType();
+        List<CommentRecord.Comment> commentRecords = gson.fromJson(commentList_string,jsonType);
+        System.out.println(commentRecords);
+
+
+        CommentAdapter commentAdapter = new CommentAdapter(mContext,commentRecords);
+
+        comment_list.setAdapter(commentAdapter);
 
         publish_btn.setOnClickListener(new View.OnClickListener() {
             @Override

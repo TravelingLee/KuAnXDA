@@ -123,6 +123,44 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Headers comment_headers = new Headers.Builder()
+                                .add("appId", appId)
+                                .add("appSecret", appSecret)
+                                .add("Accept", "application/json, text/plain, */*")
+                                .build();
+                        System.out.println("holder.id:"+holder.id);
+                        UrlBuilder comment_url = new UrlBuilder.Builder()
+                                .urlPath(get_comment_url)
+                                .append("current",currentPage)
+                                .append("size",pageSize)
+                                .append("shareId",holder.id)
+                                .build();
+                        Request comment_request = new Request.Builder()
+                                .url(comment_url.toString())
+                                .headers(comment_headers)
+                                .get()
+                                .build();
+                        Call call = httpClient.newCall(comment_request);
+                        try {
+                            Response response = call.execute();
+                            Type jsonType = new TypeToken<CommentResponse<Object>>() {
+                            }.getType();
+                            String body = response.body().string();
+                            System.out.println("响应体"+body);
+                            CommentResponse<Object> commentResponse = gson.fromJson(body, jsonType);
+                            System.out.println("评论响应体"+commentResponse);
+                            System.out.println("record字符串："+commentResponse.getData().getRecord().toString());
+                            System.out.println("intent:"+intent);
+                            intent.putExtra("first_comment_list", commentResponse.getData().getRecord().toString());
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
                         Headers headers = new Headers.Builder()
                                 .add("appId", appId)
                                 .add("appSecret", appSecret)
@@ -178,44 +216,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
                 }).start();
 
                 System.out.println(666666);
-
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Headers comment_headers = new Headers.Builder()
-//                                .add("appId", appId)
-//                                .add("appSecret", appSecret)
-//                                .add("Accept", "application/json, text/plain, */*")
-//                                .build();
-//                        System.out.println("holder.id:"+holder.id);
-//                        UrlBuilder comment_url = new UrlBuilder.Builder()
-//                                .urlPath(get_comment_url)
-//                                .append("current",currentPage)
-//                                .append("size",pageSize)
-//                                .append("shareId",holder.id)
-//                                .build();
-//                        Request comment_request = new Request.Builder()
-//                                .url(comment_url.toString())
-//                                .headers(comment_headers)
-//                                .get()
-//                                .build();
-//                        Call call = httpClient.newCall(comment_request);
-//                        try {
-//                            Response response = call.execute();
-//                            Type jsonType = new TypeToken<CommentResponse<Object>>() {
-//                            }.getType();
-//                            String body = response.body().string();
-//                            System.out.println("响应体"+body);
-//                            CommentResponse<Object> commentResponse = gson.fromJson(body, jsonType);
-//                            System.out.println("评论响应体"+commentResponse);
-//                            System.out.println("record字符串："+commentResponse.getData().getRecord().toString());
-//                            System.out.println("intent:"+intent);
-//                            intent.putExtra("first_comment_list", commentResponse.getData().getRecord().toString());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }).start();
 
             }
 

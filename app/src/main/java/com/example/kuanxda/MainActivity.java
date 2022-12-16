@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                                             String body = response.body().string();
                                             System.out.println(body);
                                             SharedResponse<Object> sharedResponse = gson.fromJson(body, jsonType);
+                                            System.out.println(sharedResponse.getCode());
                                             List<SharedResponse.Data.Record> record = sharedResponse.getData().getRecords();
                                             System.out.println("启动FoundFragment" + record.toString());
                                             System.out.println(record);
@@ -161,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 }
-//                System.out.println("试一试"+fragment.getClass());
                 return true;
             }
         });
@@ -170,13 +171,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (user_id == null) {
+                    System.out.println("userid的值"+user_id);
                     Toast.makeText(getApplicationContext(), "请先登录！", Toast.LENGTH_LONG).show();
                     return;
                 }
                 Intent intent = new Intent(MainActivity.this, PublishActivity.class);
                 intent.putExtra("user_id", user_id);
                 startActivity(intent);
-//                intent.putExtra(USER_NAME,)
             }
         });
 

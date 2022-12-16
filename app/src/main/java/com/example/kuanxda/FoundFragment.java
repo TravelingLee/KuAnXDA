@@ -172,7 +172,6 @@ public class FoundFragment extends Fragment {
                                         message.what = 1;
                                         handler.sendMessage(message);
                                         Looper.loop();
-//                                        FoundFragment.this.notify();
 
 //                                        PhotoFragment photoFragment = new PhotoFragment(record);
                                     }

@@ -17,6 +17,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public CommentAdapter(Context mContext,List<CommentRecord.Comment> comment_list) {
         this.mContext = mContext;
         this.comment_list = comment_list;
+        System.out.println("适配器收到的评论列表："+comment_list);
     }
 
     @NonNull
@@ -28,6 +29,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
+        System.out.println("适配器绑定的列表："+comment_list.get(position).getContent());
         holder.first_comment = comment_list.get(position).getContent();
         holder.username = comment_list.get(position).getUserName();
     }
